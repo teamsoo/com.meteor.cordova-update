@@ -15,6 +15,7 @@
 
 extern NSString *METEORDocumentRoot;
 extern NSString *METEORCordovajsRoot;
+extern NSString *METEORHost;
 extern NSDictionary *MimeTypeMappings;
 
 @implementation CordovaUpdate
@@ -712,6 +713,7 @@ MimeTypeMappings = @{
   NSLog(@"start serving %@", command.arguments);
   METEORDocumentRoot = [command.arguments objectAtIndex:0];
   METEORCordovajsRoot = [command.arguments objectAtIndex:1];
+  METEORHost = [command.arguments objectAtIndex:2];
 
   [NSURLProtocol registerClass:[METEORCordovaURLProtocol class]];
 

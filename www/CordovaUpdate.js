@@ -6,7 +6,8 @@ var corhttpd_exports = {};
 corhttpd_exports.startServer = function(options, success, error) {
   var defaults = {
     'www_root': '',
-    'cordovajs_root': null
+    'cordovajs_root': null,
+    'host': 'meteor.local'
   };
 
   // Merge optional settings into defaults.
@@ -16,7 +17,7 @@ corhttpd_exports.startServer = function(options, success, error) {
     }
   }
 
-  exec(success, error, "CordovaUpdate", "startServer", [ defaults['www_root'], defaults['cordovajs_root'] ]);
+  exec(success, error, "CordovaUpdate", "startServer", [ defaults['www_root'], defaults['cordovajs_root'], defaults['host'] ]);
 };
 
 corhttpd_exports.setLocalPath = function (path, success, error) {

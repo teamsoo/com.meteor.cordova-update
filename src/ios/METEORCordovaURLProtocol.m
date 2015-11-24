@@ -2,6 +2,7 @@
 
 NSString *METEORDocumentRoot;
 NSString *METEORCordovajsRoot;
+NSString *METEORHost;
 
 NSDictionary *MimeTypeMappings = nil;
 
@@ -18,7 +19,7 @@ NSDictionary *MimeTypeMappings = nil;
 {
   // only handle http requests originated to "meteor.local" domain
   if ([[[request URL] scheme] isEqualToString:@"http"] &&
-      [[[request URL] host] isEqualToString:@"meteor.local"]) {
+      [[[request URL] host] isEqualToString:METEORHost]) {
     return YES;
   }
   return NO;
@@ -173,7 +174,7 @@ NSDictionary *MimeTypeMappings = nil;
 
   // XXX HACKHACK serve cordova.js from the containing folder
   NSString *decodedPath = [path stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-  if ([decodedPath isEqualToString:@"/cordova.js"] || [decodedPath isEqualToString:@"/cordova_plugins.js"] || [decodedPath hasPrefix:@"/plugins/"])
+  if ([decodedPath isEqualToString:@"/cordova.js"] || [decodedPath isEqualToString:@"/cordova_plugins.js"] || [decodedPath hasPrefix:@"/plugins/"] || [decodedPath hasPrefix:@"/shared/"])
     return [[METEORCordovajsRoot stringByAppendingPathComponent:decodedPath] stringByStandardizingPath];
 
   return fullPath;
@@ -185,3 +186,4 @@ NSDictionary *MimeTypeMappings = nil;
 }
 
 @end
+

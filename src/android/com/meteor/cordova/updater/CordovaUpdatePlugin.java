@@ -43,7 +43,7 @@ public class CordovaUpdatePlugin extends CordovaPlugin {
 
     /**
      * Overrides uri resolution.
-     * 
+     *
      * Implements remapping, including adding default files (index.html) for directories
      */
     @Override
@@ -111,7 +111,7 @@ public class CordovaUpdatePlugin extends CordovaPlugin {
 
     /**
      * Helper function that tries all the remappers, to find the first that can remap a Uri
-     * 
+     *
      * @param uri
      * @return
      */
@@ -143,8 +143,9 @@ public class CordovaUpdatePlugin extends CordovaPlugin {
             if (ACTION_START_SERVER.equals(action)) {
                 String wwwRoot = inputs.getString(0);
                 String cordovaRoot = inputs.getString(1);
+                String host = inputs.getString(2);
 
-                String result = startServer(wwwRoot, cordovaRoot, callbackContext);
+                String result = startServer(wwwRoot, cordovaRoot, host, callbackContext);
 
                 callbackContext.success(result);
 
@@ -178,7 +179,7 @@ public class CordovaUpdatePlugin extends CordovaPlugin {
 
     /**
      * JS-called function, called after a hot-code-push
-     * 
+     *
      * @param wwwRoot
      * @param callbackContext
      */
@@ -190,7 +191,7 @@ public class CordovaUpdatePlugin extends CordovaPlugin {
 
     /**
      * Helper function that sets up the resolver ordering
-     * 
+     *
      * @param wwwRoot
      * @param cordovajsRoot
      */
@@ -236,7 +237,7 @@ public class CordovaUpdatePlugin extends CordovaPlugin {
                     // [path hasPrefix:@"/plugins/"])
                     // return [[METEORCordovajsRoot stringByAppendingPathComponent:path] stringByStandardizingPath];
                     if (path.equals("/cordova.js") || path.equals("/cordova_plugins.js")
-                            || path.startsWith("/plugins/")) {
+                            || path.startsWith("/plugins/") || path.startsWith("/shared/")) {
                         Log.v(TAG, "Detected cordova URI: " + uri);
                         Remapped remapped = cordovaRemapper.remapUri(uri);
                         if (remapped == null) {
@@ -274,7 +275,7 @@ public class CordovaUpdatePlugin extends CordovaPlugin {
 
     /**
      * JS-called function, that returns cordovajsRoot as set previously
-     * 
+     *
      * @param callbackContext
      * @return
      */
@@ -286,13 +287,16 @@ public class CordovaUpdatePlugin extends CordovaPlugin {
 
     /**
      * JS-called function, that starts the url interception
-     * 
+     *
      * @param callbackContext
      * @return
      */
-    private String startServer(String wwwRoot, String cordovaRoot, CallbackContext callbackContext)
+    private String startServer(String wwwRoot, String cordovaRoot, String host, CallbackContext callbackContext)
             throws JSONException {
-        Log.w(TAG, "startServer(" + wwwRoot + "," + cordovaRoot + ")");
+        Log.w(TAG, "startServer(" + wwwRoot + "," + cordovaRoot + "," + host + ")");
+
+        this.hosts.clear();
+        this.hosts.add(host);
 
         this.updateLocations(wwwRoot, cordovaRoot);
 
