@@ -1,0 +1,14 @@
++{
+ +  "name": "com.meteor.cordova-update",
+ +  "version": "0.0.2",
+ +  "repository": {
+  +    "type": "git",
+  +    "url": "git+ssh://git@github.com:teamsoo/com.meteor.cordova-update.git"
+  +  },
+ +  "author": "",
+ +  "license": "ISC",
+ +  "bugs": {
+  +    "url": "https://github.com/teamsoo/com.meteor.cordova-update/issues"
+  +  },
+ +  "homepage": "https://github.com/teamsoo/com.meteor.cordova-update#readme"
+ +}
